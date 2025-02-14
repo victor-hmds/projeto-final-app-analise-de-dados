@@ -1,60 +1,120 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text } from 'react-native';
-import { useAuth } from '../context/AuthContext';
+import React, { useState } from "react";
+import { View, Text, TextInput, Button, StyleSheet, Image } from "react-native";
+import { useAuth } from "../context/AuthContext";
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
-import { useLinkTo, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import logo from '../../assets/logo-rio-on.png';
+import { saveData, getData, removeData } from "../storage/storage";
 
+// Tela de login para autenticação do usuário
 const LoginScreen = () => {
+  // Estados para armazenar e-mail, senha e mensagens de erro
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Hook para acessar o contexto de autenticação
   const { login } = useAuth();
 
+  // Hook para navegação entre telas
   const navigation = useNavigation();
+
+  // Função para autenticar o usuário no Firebase
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      login(auth.currentUser); // Atualiza o estado de autenticação
+      login(auth.currentUser); // Atualiza o estado global de autenticação
     } catch (error) {
-      setErrorMessage('Credenciais inválidas');
+      setErrorMessage('Credenciais inválidas'); // Define uma mensagem genérica para erros de login
     }
   };
 
+  // Função para navegar até a tela de registro
   const handleNewUser = () => {
-    navigation.navigate('Register');
+    navigation.navigate('Registro');
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', padding: 16 }}>
+    <View style={styles.container}>
+      {/* Cabeçalho com logotipo */}
+      <View style={styles.header}>
+        <Image source={logo} style={styles.image} />
+      </View>
+      
+      {/* Campo de entrada para e-mail */}
       <TextInput
         placeholder="E-mail"
         value={email}
         onChangeText={setEmail}
-        style={{ height: 40, borderColor: '#ccc', borderWidth: 1, marginBottom: 8 }}
+        style={styles.textInput}
+        keyboardType="email-address" // Define o teclado adequado para e-mails
+        autoCapitalize="none" // Impede a capitalização automática
       />
+
+      {/* Campo de entrada para senha */}
       <TextInput
         placeholder="Senha"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
-        style={{ height: 40, borderColor: '#ccc', borderWidth: 1, marginBottom: 8 }}
+        style={styles.textInput}
       />
-      <Button title="Entrar" onPress={handleLogin} />
-      <Text
-        style={{
-          color: 'blue',
-          marginTop: 16,
-          textAlign: 'center',
-          textDecorationLine: 'underline',
-        }}
-        onPress={() => navigation.navigate('Register')} // Navegação para a tela de Registro
-      >
+
+      {/* Botão de login */}
+      <Button title="Entrar" onPress={handleLogin} color="#FD832F"/>
+
+      {/* Link para criação de conta */}
+      <Text style={styles.btnText} onPress={handleNewUser}>
         Criar uma conta
       </Text>
-      {errorMessage ? <Text style={{ color: 'red', marginTop: 10 }}>{errorMessage}</Text> : null}
+
+      {/* Exibição da mensagem de erro, se houver */}
+      {errorMessage ? <Text style={styles.text}>{errorMessage}</Text> : null}
     </View>
   );
 };
+
+// Estilos do componente
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#2f00cc',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  header: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#2f00cc',
+    padding: 24,
+    marginBottom: 10    
+  },
+  textInput: {
+    height: 40,
+    width: '90%',
+    borderColor: '#ccc',
+    backgroundColor: '#F3F1F1',
+    borderWidth: 1,
+    marginBottom: 8,
+    borderRadius: 5,
+    paddingHorizontal: 10 // Adiciona padding interno para melhorar a digitação
+  },
+  text: {
+    color: 'red',
+    marginTop: 10 
+  },
+  btnText : {
+    color: 'white',
+    marginTop: 16,
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+  },
+  image: {
+    width: 200,
+    height: 75
+  }
+});
 
 export default LoginScreen;

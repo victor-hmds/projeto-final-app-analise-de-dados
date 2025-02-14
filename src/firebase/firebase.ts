@@ -1,20 +1,15 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID, MEASUREMENT_ID } from '@env';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAUgI8ks2lTe3xznHuC5vBBEOp4NqCdGzA",
-  authDomain: "rioonreactnative.firebaseapp.com",
-  projectId: "rioonreactnative",
-  storageBucket: "rioonreactnative.firebasestorage.app",
-  messagingSenderId: "1076529020154",
-  appId: "1:1076529020154:web:7ca5f9c39b58e037c3dd43",
-  measurementId: "G-SVG360M0DT"
-  //apiKey: 'YOUR_API_KEY',
-  //authDomain: 'YOUR_AUTH_DOMAIN',
-  //projectId: 'YOUR_PROJECT_ID',
-  //storageBucket: 'YOUR_STORAGE_BUCKET',
-  //messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-  //appId: 'YOUR_APP_ID',
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
