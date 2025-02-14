@@ -5,7 +5,6 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
 import { useNavigation } from '@react-navigation/native';
 import logo from '../../assets/logo-rio-on.png';
-import { saveData, getData, removeData } from "../storage/storage";
 
 // Tela de login para autenticação do usuário
 const LoginScreen = () => {
