@@ -2,18 +2,20 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, FlatList, ActivityIndicator, StyleSheet, Alert } from "react-native";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Importando AsyncStorage
+import { useAuth } from '../context/AuthContext';
+
 
 const InsightsScreen = () => {
   const [username, setUsername] = useState(''); // Estado para armazenar o nome do usuário
   const [data, setData] = useState<any[]>([]); // Estado para armazenar os dados da API (repos do GitHub)
   const [loading, setLoading] = useState(false); // Estado para controlar o carregamento (spinner)
 
+  const { logout } = useAuth();
 
   // Função para buscar os dados da API
   const fetchData = async () => {
     if (!username.trim()) {
       Alert.alert("Erro", "Digite um nome de usuário válido!"); // Exibe alerta caso o campo de username esteja vazio
-      return;
       return;
     }
 
@@ -79,7 +81,7 @@ const InsightsScreen = () => {
       />
 
       {/* Botão de logout (não implementado ainda) */}
-      <Button title="Sair" onPress={() => {}} color="#FD832F"/>
+      <Button title="Sair" onPress={logout} color="#FD832F"/>
     </View>
   );
 };

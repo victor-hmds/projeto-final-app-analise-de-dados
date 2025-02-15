@@ -7,7 +7,6 @@ import logo from '../../assets/logo-rio-on.png';
 // Definição do componente de registro
 // Recebe a propriedade `navigation` para permitir a navegação entre telas
 const RegisterScreen = ({ navigation }: { navigation: any }) => {
-  
   // Estados para armazenar os valores de e-mail, senha e mensagens de erro
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

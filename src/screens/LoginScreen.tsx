@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import logo from '../../assets/logo-rio-on.png';
 
 // Tela de login para autenticação do usuário
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }: { navigation: any }) => {
   // Estados para armazenar e-mail, senha e mensagens de erro
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,9 +15,6 @@ const LoginScreen = () => {
 
   // Hook para acessar o contexto de autenticação
   const { login } = useAuth();
-
-  // Hook para navegação entre telas
-  const navigation = useNavigation();
 
   // Função para autenticar o usuário no Firebase
   const handleLogin = async () => {
@@ -31,7 +28,18 @@ const LoginScreen = () => {
 
   // Função para navegar até a tela de registro
   const handleNewUser = () => {
-    navigation.navigate('Registro');
+    try {
+      // Redireciona para a tela de login após o registro bem-sucedido
+      navigation.navigate('Registro'); 
+    } 
+    catch (error) {
+      // Verifica se o erro é uma instância de Error para evitar possíveis problemas
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage('Ocorreu um erro inesperado');
+      }
+    }
   };
 
   return (
