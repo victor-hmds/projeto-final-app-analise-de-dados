@@ -23,3 +23,11 @@ Para rodar o aplicativo localmente, você precisará ter as seguintes ferramenta
 - [Node.js](https://nodejs.org/) (versão 14 ou superior)
 - [Expo CLI](https://docs.expo.dev/get-started/installation/) (para iniciar o projeto React Native)
 - [Firebase Project](https://firebase.google.com/) configurado para autenticação.
+
+## Screenshots
+
+<p align="center">
+  <img src="caminho-para-imagem-1.png" width="30%" />
+  <img src="caminho-para-imagem-2.png" width="30%" />
+  <img src="caminho-para-imagem-3.png" width="30%" />
+</p>
